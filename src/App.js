@@ -22,12 +22,18 @@ import qtz1side from "./qtz-1-side.jpg";
 import qtz1FrontPanel from "./qtz-1-front-panel.jpg";
 import qtz1knobs from "./qtz-1-knobs.jpg";
 import qtz1naked from "./qtz-1-naked.jpg";
+import mosfetPaper from "./mosfet-paper.jpeg";
+import mosfetPanel from "./mosfet-panel.jpeg";
+import mosfetAdded from "./mosfet-added.jpeg";
+import mosfetAssembled from "./mosfet-assembled.jpeg";
 import prophet6soundLibrarian from "./prophet6soundlibrarian.jpg";
 import housePriceEstimator from "./house-price-1.jpg";
 import synthCatalog from "./synth-3.jpg";
 import kyotoTower from "./kyoto-tower.jpg";
-import tokyoStation from "./tokyo-station.jpg";
 import iwish from "./iwish-clone.jpg";
+import { ifft, fft } from "fft-js";
+
+const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
 const Nav = () => (
   <>
@@ -63,12 +69,17 @@ const Nav = () => (
               <i className="dropdown icon" />
               <span className="text">Eurorack</span>
               <Dropdown.Menu>
-                <Dropdown.Item href="/eurack-quantizer">QTZ-1</Dropdown.Item>
+                <Dropdown.Item href="/eurorack-quantizer">QTZ-1</Dropdown.Item>
+                <Dropdown.Item href="/eurorack-mosfet">
+                  Mosfet Overdrive
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown.Item>{" "}
             <Dropdown.Item href="/prophet-6-sound-librarian">
               Prophet 6 Sound Librarian
             </Dropdown.Item>
+            <Dropdown.Item href="/inverse-fft">Inverse FFT</Dropdown.Item>
+            <Dropdown.Item href="/wave-editor">Wave Editor</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Header>Course Projects</Dropdown.Header>
             <Dropdown.Item>
@@ -237,6 +248,62 @@ const BlogPage = () => (
     content={
       <>
         {" "}
+        <BlogPost
+          date="October 8th, 2023"
+          content={
+            <>
+              <p>
+                It's been several months since my last post. I'd like to keep
+                the updates going.
+              </p>
+              <p>
+                Synth updates:
+                <ul>
+                  <li>
+                    I've filled most of the Moog case with neat, mostly 2hp and
+                    6hp modules.
+                  </li>
+                  <li>
+                    I made a new front panel for the QTZ-1. This time I used
+                    JLCPCB to make them. The cost is considerably less. Through
+                    JLCPCB I can have 5 panels made for ~$25 ($5 per panel).
+                    Using Front Panel Express it costs about $50 per panel. The
+                    main difference in quality is the material (FR1 vs
+                    Aluminum).
+                  </li>
+                  <li>
+                    I developed a Mosfet overdrive 6hp module. I'm pretty
+                    pleased with the way it sounds, considering I'm a novice at
+                    circuit design. I'm also pleased with how quickly it took to
+                    get from design to final product. It took a little more than
+                    a month. But it felt like a year.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Japan updates:
+                <ul>
+                  <li>
+                    I passed the N2 (level 2) Japanese Language Proficiency
+                    Exam! Yay!
+                  </li>
+                  <li>
+                    I finished reading my first novel in Japanese. Actually my
+                    second. My true first novel was one of the series Shounen
+                    Meitantei (Boy detective). So my second novel was 崩壊の森
+                    Houkai no Mori, which follows a reporter sent to the Soviet
+                    Union and documents the Soviet's transition from
+                    authoritarianism.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                I find myself trying to finish up books that I've left unread
+                from several months ago, despite not being entirely interested.
+              </p>
+            </>
+          }
+        />
         <BlogPost
           date="July 22, 2023"
           content={
@@ -610,6 +677,741 @@ const SynthesizerCatalogPage = () => (
   />
 );
 
+const EurorackMosfetPage = () => (
+  <GenericPage
+    headerText="Mosfet Overdrive (Eurorack Overdrive)"
+    content={
+      <>
+        <p>
+          <Button
+            size="mini"
+            href="https://github.com/eclewlow/eurorack/releases"
+            target="_blank"
+            content="Download"
+            icon="download"
+            labelPosition="left"
+          />
+          <Button
+            size="mini"
+            href="https://github.com/eclewlow/eurorack"
+            target="_blank"
+            content="Source Code"
+            icon="github"
+            labelPosition="left"
+          />
+        </p>
+        <p>
+          {" "}
+          <Grid>
+            <Grid.Row columns={2} centered>
+              <Grid.Column>
+                <Image
+                  size="small"
+                  src={mosfetPaper}
+                  bordered
+                  rounded
+                  floated="right"
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Image
+                  src={mosfetPanel}
+                  size="small"
+                  bordered
+                  rounded
+                  floated="left"
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={2} centered>
+              <Grid.Column>
+                <Image
+                  size="small"
+                  src={mosfetAssembled}
+                  bordered
+                  rounded
+                  floated="right"
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Image
+                  src={mosfetAdded}
+                  size="small"
+                  bordered
+                  rounded
+                  floated="left"
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </p>
+        <p>Who doesn't like the tube-like sound of an overdriven mosfet?</p>
+        <p>
+          This was my second eurorack module to develop. Here's a clip of what
+          it sounds like running a sawtooth wave through a resonant filter and
+          to the Mostfet Overdrive.
+        </p>
+        <p>
+          <iframe
+            width="100%"
+            height="166"
+            scrolling="no"
+            frameborder="no"
+            allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1652851005&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+          ></iframe>
+          <div
+            style={{
+              fontSize: "10px",
+              color: "#cccccc",
+              lineBreak: "anywhere",
+              wordBreak: "normal",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              fontFamily:
+                "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
+              fontWeight: "100",
+            }}
+          >
+            <a
+              href="https://soundcloud.com/eclewlow"
+              title="eclewlow"
+              target="_blank"
+              style={{ color: "#cccccc", textDecoration: "none" }}
+            >
+              eclewlow
+            </a>{" "}
+            ·{" "}
+            <a
+              href="https://soundcloud.com/eclewlow/mosfet-overdrive-demo"
+              title="Mosfet Overdrive Demo"
+              target="_blank"
+              style={{ color: "#cccccc", textDecoration: "none" }}
+            >
+              Mosfet Overdrive Demo
+            </a>
+          </div>
+        </p>
+        <p>
+          I was happy to incorporate more components with this module, since my
+          last module was basically just potentiometers and phono jacks. This
+          one additionally uses a trimmer pot for calibrating the mosfet, an led
+          to indicate drive, and a toggle switch to bypass the effect.
+        </p>
+        <p>
+          <Image src={mosfetAssembled} />
+        </p>
+        <p>
+          <Image src={mosfetAdded} />
+        </p>{" "}
+      </>
+    }
+  />
+);
+
+const HARMONICS_BAR_HEIGHT = 240;
+const HARMONICS_CANVAS_HEIGHT = 256;
+const HARMONICS_DIVISOR = 4;
+
+class InverseFFTPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.listRef = React.createRef();
+    this.waveData = [];
+    this.harmonicsData = new Array(256);
+    for (let i = 0; i < 256; i++) this.harmonicsData[i] = [0, 0];
+    this.setHarmonic(1, 1.0);
+  }
+
+  setHarmonic(harmonic, magnitude) {
+    if (harmonic > 0) {
+      magnitude /= harmonic / HARMONICS_DIVISOR;
+    }
+    this.harmonicsData[harmonic] = [0, -128 * magnitude];
+    if (harmonic > 0)
+      this.harmonicsData[this.harmonicsData.length - harmonic] = [
+        0,
+        128 * magnitude,
+      ];
+  }
+  RunIFFT() {
+    var samples = [];
+
+    for (let i = 0; i <= 256; i++) {
+      samples.push(Math.sin(Math.PI * 2 * (i / 256.0)));
+    }
+    var signal = ifft(this.harmonicsData);
+    this.waveData = signal;
+
+    // normalize
+    let max = 0;
+    for (let i = 0; i < 256; i++) {
+      if (this.waveData[i][0] > max) {
+        max = this.waveData[i][0];
+      }
+    }
+    let threshold = 1.0;
+    if (max >= threshold)
+      for (let i = 0; i < 256; i++) {
+        this.waveData[i][0] = this.waveData[i][0] / max;
+      }
+  }
+
+  componentDidMount() {
+    this.waveData = [];
+    this.RunIFFT();
+    requestAnimationFrame(this.draw.bind(this));
+    const canvas = document.querySelector("#harmonics-canvas");
+
+    canvas.addEventListener(
+      "mousedown",
+      function (event) {
+        event.preventDefault();
+        const canvas = document.querySelector("#harmonics-canvas");
+
+        this.isMouseDown = true;
+
+        canvas.addEventListener("mouseup", this.onMouseUp.bind(this), false);
+        canvas.addEventListener(
+          "mousemove",
+          this.onMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+
+    canvas.addEventListener(
+      "touchstart",
+      function (event) {
+        const canvas = document.querySelector("#harmonics-canvas");
+
+        this.isMouseDown = true;
+
+        canvas.addEventListener("touchend", this.onMouseUp.bind(this), false);
+        canvas.addEventListener(
+          "touchmove",
+          this.onMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+  }
+
+  onMouseUp(event) {
+    const canvas = document.querySelector("#harmonics-canvas");
+    this.isMouseDown = false;
+    canvas.removeEventListener("mousemove", this.onMouseMove.bind(this), false);
+    canvas.removeEventListener("mouseup", this.onMouseUp.bind(this), false);
+    canvas.removeEventListener("touchmove", this.onMouseMove.bind(this), false);
+    canvas.removeEventListener("touchend", this.onMouseUp.bind(this), false);
+  }
+
+  onMouseMove(event) {
+    event.preventDefault();
+
+    let x, y;
+    if (event.touches) {
+      //clientX, pageX, screenX
+      x = event.touches[0].pageX - event.touches[0].target.offsetLeft;
+      y = event.touches[0].pageY - event.touches[0].target.offsetTop;
+    } else {
+      x = event.offsetX;
+      y = event.offsetY;
+    }
+
+    if (!this.isMouseDown) {
+      return;
+    }
+    const canvas = document.querySelector("#harmonics-canvas");
+    const barWidth = canvas.width / 32.0;
+    let harmonic = Math.floor(x / barWidth + 1);
+    if (harmonic >= 0) {
+      this.setHarmonic(
+        harmonic,
+        (HARMONICS_BAR_HEIGHT - Math.min(y, HARMONICS_BAR_HEIGHT)) /
+          HARMONICS_BAR_HEIGHT
+      );
+    }
+    this.RunIFFT();
+    requestAnimationFrame(this.draw.bind(this));
+  }
+
+  drawWave() {
+    const canvas = document.querySelector("#wave-canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath(); //ADD THIS LINE!<<<<<<<<<<<<<
+
+    const sliceWidth = canvas.width / 256.0;
+    let x = 0;
+    ctx.fillStyle = "rgb(0, 0, 0)";
+
+    for (let i = 0; i < this.waveData.length; i++) {
+      const v = this.waveData[i][0];
+      const y = -v * (canvas.height / 2) + canvas.height / 2;
+
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+
+      x += sliceWidth;
+    }
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.stroke();
+  }
+  drawHarmonics() {
+    const canvas = document.querySelector("#harmonics-canvas");
+
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.clearRect(0, 0, canvas.width, HARMONICS_CANVAS_HEIGHT);
+    ctx.beginPath(); //ADD THIS LINE!<<<<<<<<<<<<<
+
+    const barWidth = canvas.width / 32.0 - 1;
+    let barHeight;
+    let x = 0;
+    for (let i = 1; i < 32; i++) {
+      barHeight =
+        (HARMONICS_BAR_HEIGHT * Math.abs(this.harmonicsData[i][1]) * i) /
+        HARMONICS_DIVISOR /
+        128;
+
+      ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+      ctx.fillRect(x, HARMONICS_BAR_HEIGHT - barHeight, barWidth, barHeight);
+
+      x += barWidth + 1;
+    }
+  }
+  draw() {
+    this.drawWave();
+    this.drawHarmonics();
+  }
+  render() {
+    return (
+      <GenericPage
+        headerText="Inverse FFT"
+        content={
+          <>
+            <p>
+              Click and drag on the bottom canvas to add harmonics to the wave
+              form.
+            </p>{" "}
+            <div ref={this.listRef}>{/* ...contents... */}</div>
+            <canvas
+              style={{ border: "1px solid black" }}
+              width="512"
+              height="256"
+              id="wave-canvas"
+            ></canvas>
+            <canvas
+              style={{ border: "1px solid black" }}
+              width="512"
+              height={HARMONICS_CANVAS_HEIGHT}
+              id="harmonics-canvas"
+            ></canvas>
+          </>
+        }
+      />
+    );
+  }
+}
+
+const WAVE_EDITOR_HARMONICS_DIVISOR = 1;
+
+class WaveEditorPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.listRef = React.createRef();
+    this.waveData = [];
+    this.fft = [];
+    this.harmonicsData = new Array(256);
+    this.gs = new Array(256);
+    for (let i = 0; i < 256; i++) this.harmonicsData[i] = [0, 0];
+    this.setHarmonic(1, 0, -128, 0, 128);
+    for (let i = 0; i < 256; i++) this.gs[i] = [0, 0];
+  }
+
+  setHarmonic(harmonic, i0, r0, i1, r1) {
+    this.harmonicsData[harmonic] = [i0, r0];
+    if (harmonic > 0) {
+      this.harmonicsData[this.harmonicsData.length - harmonic] = [i1, r1];
+    }
+  }
+  RunIFFT() {
+    // var samples = [];
+
+    // for (let i = 0; i <= 256; i++) {
+    //   samples.push(Math.sin(Math.PI * 2 * (i / 256.0)));
+    // }
+    let after_gain_harmonics = JSON.parse(JSON.stringify(this.harmonicsData));
+
+    for (let i = 1; i < 32; i++) {
+      after_gain_harmonics[i][0] = this.gs[i][0] + after_gain_harmonics[i][0];
+      after_gain_harmonics[i][1] = this.gs[i][1] + after_gain_harmonics[i][1];
+      after_gain_harmonics[256 - i][0] =
+        this.gs[256 - i][0] + after_gain_harmonics[256 - i][0];
+      after_gain_harmonics[256 - i][1] =
+        this.gs[256 - i][1] + after_gain_harmonics[256 - i][1];
+    }
+
+    after_gain_harmonics[0][0] = 0;
+    after_gain_harmonics[0][1] = 0;
+
+    var signal = ifft(after_gain_harmonics);
+    this.waveData = signal;
+  }
+  RunFFT() {
+    for (let i = 0; i < 256; i++) this.gs[i] = [0, 0];
+    var dft = fft(this.waveData);
+
+    this.fft = dft;
+
+    for (let i = 0; i < 128; i++) {
+      this.setHarmonic(
+        i,
+        dft[i][0],
+        dft[i][1],
+        i > 0 ? dft[256 - i][0] : 0,
+        i > 0 ? dft[256 - i][1] : 0
+      );
+    }
+  }
+
+  componentDidMount() {
+    this.waveData = [];
+    this.RunIFFT();
+    // this.RunFFT();
+    requestAnimationFrame(this.draw.bind(this));
+    const canvas = document.querySelector("#harmonics-canvas");
+
+    canvas.addEventListener(
+      "mousedown",
+      function (event) {
+        event.preventDefault();
+        const canvas = document.querySelector("#harmonics-canvas");
+
+        this.isMouseDown = true;
+
+        canvas.addEventListener("mouseup", this.onMouseUp.bind(this), false);
+        canvas.addEventListener(
+          "mousemove",
+          this.onMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+
+    canvas.addEventListener(
+      "touchstart",
+      function (event) {
+        const canvas = document.querySelector("#harmonics-canvas");
+
+        this.isMouseDown = true;
+
+        canvas.addEventListener("touchend", this.onMouseUp.bind(this), false);
+        canvas.addEventListener(
+          "touchmove",
+          this.onMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+
+    const wave_canvas = document.querySelector("#wave-canvas");
+
+    wave_canvas.addEventListener(
+      "mousedown",
+      function (event) {
+        event.preventDefault();
+        const wave_canvas = document.querySelector("#wave-canvas");
+
+        this.isWaveCanvasMouseDown = true;
+
+        wave_canvas.addEventListener(
+          "mouseup",
+          this.onWaveCanvasMouseUp.bind(this),
+          false
+        );
+        wave_canvas.addEventListener(
+          "mousemove",
+          this.onWaveCanvasMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+
+    wave_canvas.addEventListener(
+      "touchstart",
+      function (event) {
+        const wave_canvas = document.querySelector("#wave-canvas");
+
+        this.isWaveCanvasMouseDown = true;
+
+        wave_canvas.addEventListener(
+          "touchend",
+          this.onWaveCanvasMouseUp.bind(this),
+          false
+        );
+        wave_canvas.addEventListener(
+          "touchmove",
+          this.onWaveCanvasMouseMove.bind(this),
+          false
+        );
+      }.bind(this),
+      false
+    );
+  }
+
+  onWaveCanvasMouseUp(event) {
+    const canvas = document.querySelector("#wave-canvas");
+    this.isWaveCanvasMouseDown = false;
+    canvas.removeEventListener(
+      "mousemove",
+      this.onWaveCanvasMouseMove.bind(this),
+      false
+    );
+    canvas.removeEventListener(
+      "mouseup",
+      this.onWaveCanvasMouseUp.bind(this),
+      false
+    );
+    canvas.removeEventListener(
+      "touchmove",
+      this.onWaveCanvasMouseMove.bind(this),
+      false
+    );
+    canvas.removeEventListener(
+      "touchend",
+      this.onWaveCanvasMouseUp.bind(this),
+      false
+    );
+  }
+
+  onWaveCanvasMouseMove(event) {
+    event.preventDefault();
+
+    let x, y;
+    if (event.touches) {
+      //clientX, pageX, screenX
+      x = event.touches[0].pageX - event.touches[0].target.offsetLeft;
+      y = event.touches[0].pageY - event.touches[0].target.offsetTop;
+    } else {
+      x = event.offsetX;
+      y = event.offsetY;
+    }
+
+    if (!this.isWaveCanvasMouseDown) {
+      return;
+    }
+
+    const canvas = document.querySelector("#wave-canvas");
+
+    x = clamp(x, 0, canvas.width - 2);
+
+    this.waveData[Math.floor((256 * x) / canvas.width)][0] = -(
+      (2 * y) / canvas.height -
+      1.0
+    );
+    this.waveData[Math.floor(1 + (256 * x) / canvas.width)][0] = -(
+      (2 * y) / canvas.height -
+      1.0
+    );
+    this.RunFFT();
+    requestAnimationFrame(this.draw.bind(this));
+  }
+
+  onMouseUp(event) {
+    const canvas = document.querySelector("#harmonics-canvas");
+    this.isMouseDown = false;
+    canvas.removeEventListener("mousemove", this.onMouseMove.bind(this), false);
+    canvas.removeEventListener("mouseup", this.onMouseUp.bind(this), false);
+    canvas.removeEventListener("touchmove", this.onMouseMove.bind(this), false);
+    canvas.removeEventListener("touchend", this.onMouseUp.bind(this), false);
+  }
+
+  onMouseMove(event) {
+    event.preventDefault();
+
+    let x, y;
+    if (event.touches) {
+      //clientX, pageX, screenX
+      x = event.touches[0].pageX - event.touches[0].target.offsetLeft;
+      y = event.touches[0].pageY - event.touches[0].target.offsetTop;
+    } else {
+      x = event.offsetX;
+      y = event.offsetY;
+    }
+
+    if (!this.isMouseDown) {
+      return;
+    }
+    const canvas = document.querySelector("#harmonics-canvas");
+    const barWidth = canvas.width / 32.0;
+    let harmonic = Math.floor(x / barWidth + 1);
+    if (harmonic > 0) {
+      let i = harmonic;
+      let cr = this.harmonicsData[i][1] * this.harmonicsData[i][1];
+      let ci = this.harmonicsData[i][0] * this.harmonicsData[i][0];
+      let magnitude = Math.sqrt(cr + ci);
+
+      let barY =
+        (HARMONICS_BAR_HEIGHT - Math.min(y, HARMONICS_BAR_HEIGHT)) /
+        HARMONICS_BAR_HEIGHT;
+
+      function getG(hyp, aoriginal, barY, index, secondHalf) {
+        let amax = 0;
+        if (hyp == 0) {
+          // amax = 128 / Math.sqrt(2);
+          if (index == 1) amax = 128 * (secondHalf ? 1 : -1);
+          else amax = 0;
+        } else {
+          amax = (aoriginal * 128) / hyp;
+        }
+
+        let result = barY * amax - aoriginal;
+
+        return result;
+      }
+
+      let hyp = magnitude;
+
+      this.gs[i][0] = getG(hyp, this.harmonicsData[i][0], barY, 0, 0);
+      this.gs[i][1] = getG(hyp, this.harmonicsData[i][1], barY, 1, 0);
+
+      cr = this.harmonicsData[256 - i][1] * this.harmonicsData[256 - i][1];
+      ci = this.harmonicsData[256 - i][0] * this.harmonicsData[256 - i][0];
+      magnitude = Math.sqrt(cr + ci);
+      hyp = magnitude;
+
+      this.gs[256 - i][0] = getG(
+        hyp,
+        this.harmonicsData[256 - i][0],
+        barY,
+        0,
+        1
+      );
+      this.gs[256 - i][1] = getG(
+        hyp,
+        this.harmonicsData[256 - i][1],
+        barY,
+        1,
+        1
+      );
+    }
+    this.RunIFFT();
+    requestAnimationFrame(this.draw.bind(this));
+  }
+
+  drawWave() {
+    const canvas = document.querySelector("#wave-canvas");
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath(); //ADD THIS LINE!<<<<<<<<<<<<<
+
+    const sliceWidth = canvas.width / 256.0;
+    let x = 0;
+    ctx.fillStyle = "rgb(0, 0, 0)";
+
+    for (let i = 0; i < this.waveData.length; i++) {
+      let v = this.waveData[i][0];
+      v = clamp(v, -0.9, 0.9);
+      const y = -v * (canvas.height / 2) + canvas.height / 2;
+
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+
+      x += sliceWidth;
+    }
+
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.stroke();
+  }
+  drawHarmonics() {
+    const canvas = document.querySelector("#harmonics-canvas");
+
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.clearRect(0, 0, canvas.width, HARMONICS_CANVAS_HEIGHT);
+    ctx.beginPath(); //ADD THIS LINE!<<<<<<<<<<<<<
+
+    const barWidth = canvas.width / 32 - 1;
+    let barHeight;
+    let x = 0;
+    for (let i = 1; i < 32; i++) {
+      let imag = this.harmonicsData[i][1] + this.gs[i][1];
+      let real = this.harmonicsData[i][0] + this.gs[i][0];
+      let cr = imag * imag;
+      let ci = real * real;
+      let magnitude = Math.sqrt(cr + ci);
+      barHeight =
+        (HARMONICS_BAR_HEIGHT * magnitude) /
+        WAVE_EDITOR_HARMONICS_DIVISOR /
+        128;
+
+      ctx.fillStyle = `rgb(${barHeight + 255 - 128}, 50, 50)`;
+      ctx.fillRect(x, HARMONICS_BAR_HEIGHT - barHeight, barWidth, barHeight);
+
+      x += barWidth + 1;
+    }
+  }
+  draw() {
+    this.drawWave();
+    this.drawHarmonics();
+  }
+  render() {
+    return (
+      <GenericPage
+        headerText="Wave Editor"
+        content={
+          <>
+            <p>
+              Click and drag on the top canvas to add harmonics to the wave
+              form.
+              <br />
+              Click and drag on the wave canvas to draw a wave and see the
+              harmonic content.
+            </p>{" "}
+            <div ref={this.listRef}>{/* ...contents... */}</div>
+            <canvas
+              style={{ border: "1px solid black" }}
+              width="512"
+              height={HARMONICS_CANVAS_HEIGHT}
+              id="harmonics-canvas"
+            ></canvas>
+            <br />
+            <br />
+            <br />
+            <canvas
+              style={{
+                border: "1px solid black",
+                transform: "scale(2.0,2.0)",
+              }}
+              width="128"
+              height="64"
+              id="wave-canvas"
+            ></canvas>
+          </>
+        }
+      />
+    );
+  }
+}
+
 export {
   Homepage,
   BlogPage,
@@ -619,4 +1421,7 @@ export {
   Prophet6SoundLibrarianPage,
   HousePriceEstimatorPage,
   SynthesizerCatalogPage,
+  EurorackMosfetPage,
+  InverseFFTPage,
+  WaveEditorPage,
 };

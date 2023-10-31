@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import {
   BrowserRouter as Router,
@@ -12,21 +12,29 @@ import {
   BlogPage,
   AUSynthesizerPage,
   EurorackQuantizerPage,
+  EurorackMosfetPage,
   JuceIWishPage,
   Prophet6SoundLibrarianPage,
   HousePriceEstimatorPage,
   SynthesizerCatalogPage,
+  InverseFFTPage,
+  WaveEditorPage,
 } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  // <React.StrictMode>
   <Router>
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/au-synthesizer" element={<AUSynthesizerPage />} />
-      <Route path="/eurack-quantizer" element={<EurorackQuantizerPage />} />
+      <Route path="/eurorack-quantizer" element={<EurorackQuantizerPage />} />
+      <Route path="/eurorack-mosfet" element={<EurorackMosfetPage />} />
       <Route path="/juce-iwish" element={<JuceIWishPage />} />
+      <Route path="/inverse-fft" element={<InverseFFTPage />} />
+      <Route path="/wave-editor" element={<WaveEditorPage />} />
       <Route
         path="/prophet-6-sound-librarian"
         element={<Prophet6SoundLibrarianPage />}
@@ -38,8 +46,8 @@ ReactDOM.render(
       <Route path="/synthesizer-catalog" element={<SynthesizerCatalogPage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
-  </Router>,
-  document.getElementById("root")
+  </Router>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
