@@ -71,7 +71,10 @@ const Nav = () => (
               <Dropdown.Menu>
                 <Dropdown.Item href="/eurorack-quantizer">QTZ-1</Dropdown.Item>
                 <Dropdown.Item href="/eurorack-mosfet">
-                  Mosfet Overdrive
+                  Mosfet Multidrive
+                </Dropdown.Item>
+                <Dropdown.Item href="/eurorack-graphic-vco-clone">
+                  Graphic VCO clone
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown.Item>{" "}
@@ -142,41 +145,57 @@ const Footer = () => (
     }}
   >
     <Container textAlign="center">
-      <Grid divided inverted stackable>
-        <Grid.Column width={3}>
-          <Header inverted as="h4" content="Group 1" />
-          <List link inverted>
-            <List.Item as="a">Link One</List.Item>
-            <List.Item as="a">Link Two</List.Item>
-            <List.Item as="a">Link Three</List.Item>
-            <List.Item as="a">Link Four</List.Item>
-          </List>
-        </Grid.Column>
-        <Grid.Column width={3}>
-          <Header inverted as="h4" content="Group 2" />
-          <List link inverted>
-            <List.Item as="a">Link One</List.Item>
-            <List.Item as="a">Link Two</List.Item>
-            <List.Item as="a">Link Three</List.Item>
-            <List.Item as="a">Link Four</List.Item>
-          </List>
-        </Grid.Column>
-        <Grid.Column width={3}>
-          <Header inverted as="h4" content="Group 3" />
-          <List link inverted>
-            <List.Item as="a">Link One</List.Item>
-            <List.Item as="a">Link Two</List.Item>
-            <List.Item as="a">Link Three</List.Item>
-            <List.Item as="a">Link Four</List.Item>
-          </List>
-        </Grid.Column>
-        <Grid.Column width={7}>
-          <Header inverted as="h4" content="Footer Header" />
-          <p>
-            Extra space for a call to action inside the footer that could help
-            re-engage users.
-          </p>
-        </Grid.Column>
+      <Grid columns="equal" divided inverted padded>
+        <Grid.Row>
+          <Grid.Column>
+            <Header inverted as="h4" content="Index" />
+            <List link inverted>
+              <List.Item as="a" href="/">
+                Home
+              </List.Item>
+              <List.Item as="a" href="/blog">
+                Blog
+              </List.Item>
+            </List>
+          </Grid.Column>
+          <Grid.Column>
+            <Header inverted as="h4" content="Projects" />
+            <List link inverted>
+              <List.Item href="/eurorack-graphic-vco-clone" as="a">
+                Graphic VCO clone
+              </List.Item>
+              <List.Item href="/eurorack-quantizer" as="a">
+                Quantizer Eurorack Module
+              </List.Item>
+              <List.Item href="/prophet-6-sound-librarian" as="a">
+                Prophet 6 Sound Librarian
+              </List.Item>
+              <List.Item href="/au-synthesizer" as="a">
+                Synthesizer VST / AU
+              </List.Item>
+              <List.Item href="/juce-iwish" as="a">
+                IWish Juce clone VST / AU
+              </List.Item>
+            </List>
+          </Grid.Column>
+          <Grid.Column>
+            <Header inverted as="h4" content="Social" />
+            <List link inverted>
+              <List.Item href="https://www.instagram.com/eugeneclewlow/" as="a">
+                Instagram
+              </List.Item>
+              <List.Item href="https://github.com/eclewlow" as="a">
+                Github
+              </List.Item>
+              <List.Item
+                href="https://www.linkedin.com/in/eugene-clewlow-080424196/"
+                as="a"
+              >
+                LinkedIn
+              </List.Item>
+            </List>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
 
       <Divider inverted section />
@@ -208,6 +227,7 @@ const GenericPage = ({ headerText, content }) => (
       </Header>
       {content}
     </Container>
+    <Footer />
   </>
 );
 
@@ -224,7 +244,7 @@ const Homepage = () => (
           <Item.Content verticalAlign="middle">
             <Item.Header as="a">Eugene Clewlow</Item.Header>
             <Item.Description>
-              <p>eugene.clewlow@sjsu.edu</p>
+              <p>eugene.clewlow@gmail.com</p>
               <p>Copyright &copy; 2023 Eugene Clewlow.</p>
             </Item.Description>
           </Item.Content>
@@ -248,6 +268,135 @@ const BlogPage = () => (
     content={
       <>
         {" "}
+        <BlogPost
+          date="March 7th, 2024"
+          content={
+            <>
+              <p>
+                I thought more time had gone by, but it's only been about a
+                month. I think it's a good time to write an update.
+              </p>
+              <p>
+                Synth updates:
+                <ul>
+                  <li>
+                    I'm still just working on the Erica Synths Graphic VCO
+                    clone. I keep running into program quirkiness with Arm and
+                    C++. It kinda bums me out. But I'm very slowly chugging
+                    along. I enjoy it when it works. Not so much when it doesn't
+                    work. At the moment I'm running into an issue where calling
+                    a function through dynamic binding (virtual function) is
+                    causing the program to hault. I think it has something to do
+                    with using a local non-const pointer to point to a global
+                    variable.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Japan updates:
+                <ul>
+                  <li>
+                    I'm still studying Japanese. I started reading a Murakami
+                    novel in Japanese called Afterdark. I'm halfway through with
+                    it already.
+                  </li>
+                  <li>
+                    My friend Ken is visiting now! It's great to have him here.
+                    We've been eating good food. I took him to play ping pong
+                    but he said it makes him dizzy. I see, it can have that
+                    effect on people.
+                  </li>
+                  <li>
+                    We have also been going to the driving range to practice
+                    golf. It's pretty fun.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Ping pong updates:
+                <ul>
+                  <li>
+                    I got a new bat. It's the Peter Korbl Butterfly. It's highly
+                    recommended for newcomers to the sport. I sold the Joo
+                    SaeHyuk. I don't think it matches my play style.
+                  </li>
+                  <li>
+                    I started a membership at a ping pong club in Santa Clara
+                    called Swan Ping Pong. I'm having the best times of my life
+                    playing there. Such unique players there.
+                  </li>
+                </ul>
+              </p>
+            </>
+          }
+        />
+        <BlogPost
+          date="January 17th, 2024"
+          content={
+            <>
+              <p>
+                Happy New Year! Holy moly. I haven't been keeping up with the
+                updates as I said I would. Here are some updates.
+              </p>
+              <p>
+                Synth updates:
+                <ul>
+                  <li>
+                    I redesigned the FET overdrive with parts that the Moog
+                    Multidrive circuit uses. It seems to work better now, in
+                    that the LED lights up more linearly in response to the
+                    pre-gain. Also there is more bass response, as most of the
+                    HPF capacitors were removed.
+                  </li>
+                  <li>
+                    I'm working on a{" "}
+                    <a href="/eurorack-graphic-vco-clone">
+                      clone of the Erica Synths Graphic VCO module
+                    </a>
+                    . Currently I'm trying to get an LCD to work from
+                    BuyDisplay. It's not working right now. I'm hoping it's just
+                    a circuit design / soldering issue with the zif connector
+                    breakout board. Really I should finish programming the rest
+                    of the sound engines while I wait for PCBs to arrive.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Japan updates:
+                <ul>
+                  <li>
+                    I'm still studying Japanese. I just finished reading a
+                    Murakami novel in Japanese. I plan to read more manga and
+                    novels, and do study for the N1 proficiency exam. And watch
+                    J dramas.
+                  </li>
+                  <li>
+                    My friend Ken is planning to visit a month from now, so I'm
+                    cleaning the house so it's somewhat decent for him.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Ping pong updates:
+                <ul>
+                  <li>
+                    I started playing ping pong again! It's great exercise. I
+                    love ping pong so much. I feel it's so expressive in terms
+                    of style. Everybody I play with is so unique. I also love
+                    ping pong paddles. They are designed so exquisitely. I
+                    compare them to the design of swords.
+                  </li>
+                  <li>
+                    I'm currently playing with the Butterfly Joo SaeHyuk blade,
+                    with Andro Rasanter 42 on FH and Butterfly Sriver BH. My
+                    goal is to get better with forehand topspin vs backspin
+                    today. There is a meetup ping pong free play tonight.
+                  </li>
+                </ul>
+              </p>
+            </>
+          }
+        />
         <BlogPost
           date="October 8th, 2023"
           content={
@@ -617,13 +766,23 @@ const HousePriceEstimatorPage = () => (
             labelPosition="left"
           />
         </p>
-
         <p>
           The goal of this project was to combine a smart phone interface with a
-          backend machine learning model.
+          backend machine learning model. A fellow student developed UI mock
+          frames, and I integrated the UI into Android and programmed the system
+          code, including integrating the Google Maps SDK, Google Maps API, and
+          Google Firebase for user login and registration.
         </p>
-        <p>
-          <Image size="large" centered src={housePriceEstimator} />
+        <p style={{ textAlign: "center" }}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/CN5U1jxJXTk?si=OWqHwn4DE9l7x4rL"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </p>
         <p>
           The backend consisted of a Decision Tree algorithm trained on a house
@@ -631,6 +790,9 @@ const HousePriceEstimatorPage = () => (
           code using Model-View-Controller architecture. I incorporated the
           Google Maps SDK for Map navitation, and the Google Maps API for
           embedding a map image.
+        </p>
+        <p>
+          <Image size="large" centered src={housePriceEstimator} />
         </p>
       </>
     }
@@ -679,7 +841,7 @@ const SynthesizerCatalogPage = () => (
 
 const EurorackMosfetPage = () => (
   <GenericPage
-    headerText="Mosfet Overdrive (Eurorack Overdrive)"
+    headerText="Mosfet Multidrive (Eurorack)"
     content={
       <>
         <p>
@@ -745,53 +907,11 @@ const EurorackMosfetPage = () => (
             </Grid.Row>
           </Grid>
         </p>
-        <p>Who doesn't like the tube-like sound of an overdriven mosfet?</p>
         <p>
-          This was my second eurorack module to develop. Here's a clip of what
-          it sounds like running a sawtooth wave through a resonant filter and
-          to the Mostfet Overdrive.
-        </p>
-        <p>
-          <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1652851005&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
-          ></iframe>
-          <div
-            style={{
-              fontSize: "10px",
-              color: "#cccccc",
-              lineBreak: "anywhere",
-              wordBreak: "normal",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              fontFamily:
-                "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-              fontWeight: "100",
-            }}
-          >
-            <a
-              href="https://soundcloud.com/eclewlow"
-              title="eclewlow"
-              target="_blank"
-              style={{ color: "#cccccc", textDecoration: "none" }}
-            >
-              eclewlow
-            </a>{" "}
-            ·{" "}
-            <a
-              href="https://soundcloud.com/eclewlow/mosfet-overdrive-demo"
-              title="Mosfet Overdrive Demo"
-              target="_blank"
-              style={{ color: "#cccccc", textDecoration: "none" }}
-            >
-              Mosfet Overdrive Demo
-            </a>
-          </div>
+          This was my second eurorack module to develop. The goal of this
+          project was to create a Eurorack module using the schematic for the
+          Moog multidrive. It uses the same mosfet component and surrounding
+          circuitry.
         </p>
         <p>
           I was happy to incorporate more components with this module, since my
@@ -805,6 +925,60 @@ const EurorackMosfetPage = () => (
         <p>
           <Image src={mosfetAdded} />
         </p>{" "}
+      </>
+    }
+  />
+);
+
+const GraphicVCOPage = () => (
+  <GenericPage
+    headerText="Graphic VCO clone"
+    content={
+      <>
+        <p>
+          <Button
+            size="mini"
+            href="https://github.com/eclewlow/Wavetable/releases"
+            target="_blank"
+            content="Download"
+            icon="download"
+            labelPosition="left"
+          />
+          <Button
+            size="mini"
+            href="https://github.com/eclewlow/Wavetable"
+            target="_blank"
+            content="Source Code"
+            icon="github"
+            labelPosition="left"
+          />
+        </p>
+        <p>
+          {" "}
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/I2e2QUDk2MY?si=ejBYu6aLQHWSegsT"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </p>
+        <p>
+          The goal of this project was to clone Erica Synth's Graphic VCO
+          software using the JUCE framework. It follows roughly 95% of the
+          original user interface.
+        </p>
+        <p>
+          I learned to code the surrounding DSP such as effects (FM, Ring
+          modulation, Bitcrush, etc.) myself, so those features may or may not
+          be one-to-one with the original module.
+        </p>
+        <p>
+          I don't actually own this module. I learned how it works by watching
+          videos and reading the documentation. All sprites were copied by hand.
+        </p>
       </>
     }
   />
@@ -1424,4 +1598,5 @@ export {
   EurorackMosfetPage,
   InverseFFTPage,
   WaveEditorPage,
+  GraphicVCOPage,
 };

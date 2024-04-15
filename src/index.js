@@ -19,6 +19,7 @@ import {
   SynthesizerCatalogPage,
   InverseFFTPage,
   WaveEditorPage,
+  GraphicVCOPage,
 } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -32,6 +33,7 @@ root.render(
       <Route path="/au-synthesizer" element={<AUSynthesizerPage />} />
       <Route path="/eurorack-quantizer" element={<EurorackQuantizerPage />} />
       <Route path="/eurorack-mosfet" element={<EurorackMosfetPage />} />
+      <Route path="/eurorack-graphic-vco-clone" element={<GraphicVCOPage />} />
       <Route path="/juce-iwish" element={<JuceIWishPage />} />
       <Route path="/inverse-fft" element={<InverseFFTPage />} />
       <Route path="/wave-editor" element={<WaveEditorPage />} />
