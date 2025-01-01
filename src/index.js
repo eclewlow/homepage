@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ import {
   InverseFFTPage,
   WaveEditorPage,
   GraphicVCOPage,
+  N1Goi,
 } from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -30,6 +32,7 @@ root.render(
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/blog" element={<BlogPage />} />
+      <Route path="/n1-goi" element={<N1Goi />} />
       <Route path="/au-synthesizer" element={<AUSynthesizerPage />} />
       <Route path="/eurorack-quantizer" element={<EurorackQuantizerPage />} />
       <Route path="/eurorack-mosfet" element={<EurorackMosfetPage />} />
