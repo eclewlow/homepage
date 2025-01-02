@@ -931,7 +931,7 @@ export const n1GoiEnglish = [
   ["こべつ", "個別", "Individual"],
   ["コマーシャル", "commercial", "Commercial"],
   ["ごまかす", "誤魔化す", "To conceal"],
-  ["こまやか,細やか、濃やか", "Subtle", " rich"],
+  ["こまやか", "細やか、濃やか", "friendly, heartfelt, tender"],
   ["コメント", "comment", "Comment"],
   ["こもる", "籠もる", "Stay indoors"],
   ["こゆう", "固有", "Unique"],
