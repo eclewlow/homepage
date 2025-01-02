@@ -307,9 +307,35 @@ const BlogPage = () => (
     headerText="Blog"
     content={
       <>
-        {" "}
         <BlogPost
-          date="December 22nd, 2024"
+          date="January 1st, 2024"
+          content={
+            <>
+              <p>
+                {" "}
+                Guitar updates:
+                <ul>
+                  <li>
+                    Jammed AC/DC and Doobie Brothers songs.
+                    <ul>
+                      <li>Classic Gain Gain: 10</li>
+                      <li>Ultra Gain Gain: 2.5</li>
+                      <li>Treble: 5</li>
+                      <li>Middle: 10</li>
+                      <li>Bass: 0</li>
+                      <li>Presence: 5</li>
+                      <li>Resonance: 0</li>
+                      <li>Reverb: 0</li>
+                      <li>Tone Shift: On</li>
+                    </ul>
+                  </li>
+                </ul>
+              </p>
+            </>
+          }
+        />{" "}
+        <BlogPost
+          date="December 28th, 2024"
           content={
             <>
               <p>
